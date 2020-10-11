@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static com.lemberski.webserver.http.Constants.*;
 
@@ -38,7 +40,8 @@ public class RequestParser {
     private void readRequestLine(Request request, String line) {
         String[] values = line.split(BLANK);
         request.setMethod(Method.valueOf(values[0]));
-        request.setPath(values[1]);
+        URI uri = URI.create(values[1]);
+        request.setPath(uri.getPath().isBlank() ? SLASH : uri.getPath());
         request.setHttpVersion(values[2]);
     }
 

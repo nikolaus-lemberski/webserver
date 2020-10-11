@@ -39,6 +39,34 @@ public class RequestParserTest extends ContextAwareBaseTest {
     }
 
     @Test
+    public void testParseRequestAbsoluteUriWithSlash() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("GET http://localhost:8080/ HTTP/1.1" + CRLF);
+        sb.append(CRLF);
+
+        InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
+        Request request = requestParser.from(inputStream);
+
+        assertEquals(request.getPath(), SLASH);
+
+        inputStream.close();
+    }
+
+    @Test
+    public void testParseRequestAbsoluteUriWithoutSlash() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("GET http://localhost:8080 HTTP/1.1" + CRLF);
+        sb.append(CRLF);
+
+        InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
+        Request request = requestParser.from(inputStream);
+
+        assertEquals(request.getPath(), SLASH);
+
+        inputStream.close();
+    }
+
+    @Test
     public void testConnectionClose() throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("GET / HTTP/1.1" + CRLF);
