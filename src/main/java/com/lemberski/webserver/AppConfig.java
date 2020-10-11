@@ -25,9 +25,11 @@ public class AppConfig {
 
     @Bean
     public ThreadPoolTaskExecutor taskExecutor(@Value("${taskexecutor.corepoolsize}") int corePoolSize,
+                                               @Value("${taskexecutor.queue.capacity}") int queueCapactiy,
                                                @Value("${taskexecutor.maxpoolsize}") int maxPoolSize) {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(corePoolSize);
+        taskExecutor.setQueueCapacity(queueCapactiy);
         taskExecutor.setMaxPoolSize(maxPoolSize);
         return taskExecutor;
     }

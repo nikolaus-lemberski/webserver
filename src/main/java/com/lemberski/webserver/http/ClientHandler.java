@@ -65,11 +65,11 @@ public class ClientHandler implements Runnable {
 
                     Response response = responseBuilder.from(request);
                     responseWriter.send(response, outputStream);
-                } catch (SocketTimeoutException e) {
-                    LOG.debug("Client connection timeout, 'connection.timeout.sec' configured to {}.", connectionTimeout);
+                } catch (SocketTimeoutException | SocketException | NullPointerException e) {
+                    LOG.trace("Connection timeout or closed by client, 'connection.timeout.sec' configured to {}.", connectionTimeout);
                     keepAlive = false;
                 } catch (Exception e) {
-                    LOG.warn("Error reading request from client, {}", e.getMessage());
+                    LOG.warn("Error processing the request.", e);
                     keepAlive = false;
                 }
             }

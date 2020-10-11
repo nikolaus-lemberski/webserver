@@ -32,6 +32,9 @@ public class ResponseBuilder {
     @Value("${connection.timeout.sec}")
     private int connectionTimeout;
 
+    @Value("${www.charset}")
+    private String charset;
+
     public Response from(Request request) throws IOException {
         Response response = new Response();
         if (!request.isValid()) {
@@ -75,7 +78,12 @@ public class ResponseBuilder {
             response.setStatus(Status.OK);
             response.setFilePath(contentPath.get());
 
-            response.addHeader(CONTENT_TYPE, fileHelper.mimeType(path));
+            String mimeType = fileHelper.mimeType(path);
+            if (mimeType.startsWith("text")) {
+                response.addHeader(CONTENT_TYPE, format("%s;charset=%s", mimeType, charset));
+            } else {
+                response.addHeader(CONTENT_TYPE, mimeType);
+            }
             response.addHeader(CONTENT_LENGTH, String.valueOf(Files.size(contentPath.get())));
         } else {
             LOG.warn("File for path '{}' not found, sending 404.", path);

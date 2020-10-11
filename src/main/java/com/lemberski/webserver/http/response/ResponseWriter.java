@@ -28,10 +28,7 @@ public class ResponseWriter {
         } finally {
             try {
                 outputStream.flush();
-                LOG.debug("Response for {} flushed",
-                        Status.OK.equals(response.getStatus())
-                                ? response.getFilePath()
-                                : response.getStatus());
+                LOG.debug("Response flushed, {}", response);
             } catch (IOException e) {
                 LOG.warn("Cannot flush to OutputStream: {}", e.getMessage());
             }
