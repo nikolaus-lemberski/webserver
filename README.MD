@@ -1,6 +1,8 @@
 # Simple HTTP Webserver
 
-DEMO PROJECT - DO NOT USE IN PRODUCTION. The project runs a simple HTTP webserver to serve static files from a directory.
+DEMO PROJECT - DO NOT USE IN PRODUCTION
+
+The project runs a simple HTTP webserver to serve static files from a directory.
 
 ## Configuration
 
@@ -22,5 +24,13 @@ Now you can your image:
 
 If you want to serve files from a local directory on your machine, say on '~/tmp/webserver_public', use the Docker run command
 
-`docker run -p 8080:8080 -v ~/tmp/webserver_public:/local_www_root_dir -e www.root.dir=/local_www_root_dir lemberski/webserver`~
+`docker run -p 8080:8080 -v ~/tmp/webserver_public:/local_www_root_dir -e www.root.dir=/local_www_root_dir lemberski/webserver`
 
+## Loadtest
+
+To run a simple load test, start the app (see 'Maven' and 'Docker' sections), then go to the loadtest directory and run
+
+`npm install`
+`npm start`
+
+Configuration options for load testing see loadtest/config.yml. NodeJS is required to run 'npm'.
