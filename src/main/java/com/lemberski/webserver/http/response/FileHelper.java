@@ -21,6 +21,9 @@ public class FileHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileHelper.class);
 
+    @Value("${www.charset}")
+    private String charset;
+
     @Value("${www.files.dir}")
     private String rootDir;
 
@@ -46,7 +49,7 @@ public class FileHelper {
         switch (fileEnding) {
             case HTML_FILE_ENDING:
             case HTM_FILE_ENDING:
-                return "text/html";
+                return "text/html; charset=" + charset;
             case "css":
                 return "text/css";
             case "js":
