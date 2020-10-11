@@ -10,7 +10,7 @@ Only GET and HEAD methods are supported at the moment.
 
 ## Project structure
 
-All HTTP handling is done with pure Java and no external libraries. Spring is used for providing configuration (via application.properties, can be overridden via environment variables) and Dependency Injection.
+All HTTP handling is done with pure Java and no external libraries. Spring is used to provide configuration (via application.properties, can be overridden via environment variables) and for Dependency Injection.
 
 The blocking approach was chosen to deal with requests. In order to handle many requests, each client connection is processed in a new thread. If the connection is configured to 'keep-alive' (default in HTTP/1.1 if not explicitly set to 'close' by the client), further requests are processed in the same thread until the connection timeouts.
 
@@ -18,7 +18,7 @@ The blocking approach was chosen to deal with requests. In order to handle many 
 
 ## Configuration
 
-Environment variables can be passed with the -e flag, all project configuration in 'src/main/resources/application.properties' can be overridden.
+All project configuration in 'src/main/resources/application.properties' can be overridden via environment variables.
 
 ## Maven
 
