@@ -67,6 +67,20 @@ public class RequestParserTest extends ContextAwareBaseTest {
     }
 
     @Test
+    public void testParseRequestSubdirPath() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("GET http://localhost:8080/css/styles.css HTTP/1.1" + CRLF);
+        sb.append(CRLF);
+
+        InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
+        Request request = requestParser.from(inputStream);
+
+        assertEquals(request.getPath(), "/css/styles.css");
+
+        inputStream.close();
+    }
+
+    @Test
     public void testConnectionClose() throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("GET / HTTP/1.1" + CRLF);
