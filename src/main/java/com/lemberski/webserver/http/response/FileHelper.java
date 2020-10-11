@@ -21,7 +21,7 @@ public class FileHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileHelper.class);
 
-    @Value("${www.files.dir}")
+    @Value("${www.root.dir}")
     private String rootDir;
 
     private Path rootDirPath;
@@ -67,19 +67,9 @@ public class FileHelper {
     }
 
     private void initRootDirPath(String rootDir) {
-        if (rootDir.startsWith("classpath:")) {
-            String rootDirOnClasspath = rootDir.substring(rootDir.indexOf(":") + 1);
-            try {
-                rootDirPath = Paths.get(ClassLoader.getSystemResource(rootDirOnClasspath).toURI());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(format("Error in 'www.files.dir' configuration '%s'", rootDir));
-            }
-        } else {
-            rootDirPath = Paths.get(rootDir);
-        }
-
+        rootDirPath = Paths.get(rootDir);
         if (Files.notExists(rootDirPath)) {
-            throw new RuntimeException(format("Error in 'www.files.dir' configuration '%s'", rootDir));
+            throw new RuntimeException(format("Error in 'www.root.dir' configuration '%s'", rootDir));
         }
 
         LOG.info("Root directory for files is '{}'", rootDirPath);
