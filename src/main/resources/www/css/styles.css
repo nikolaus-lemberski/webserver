@@ -1,0 +1,7 @@
+h1 {
+  color: #0000cc;
+}
+
+h1.error {
+    color: #e62e00;
+}
