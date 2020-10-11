@@ -8,6 +8,8 @@
 
 <h1>It works!</h1>
 <p>Congrats, your webserver is healthy. If you're the app owner, configure the www root to serve your webpage.</p>
+<p>If you're running the app in Docker and want to serve files from a local directory on your machine, say on '/tmp/webserver_public', use the -v flag to define a volume and the -e flag to configure the www root directory.</p>
+<p><i>docker run -p 8080:8080 -v ~/tmp/webserver_public:/local_www_root_dir -e www.root.dir=/local_www_root_dir lemberski/webserver</i></p>
 
 </body>
 </html>

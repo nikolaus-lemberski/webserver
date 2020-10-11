@@ -31,7 +31,7 @@ public class Server {
     @Autowired
     private Provider<ClientHandler> clientHandlerProvider;
 
-    @Value("${port}")
+    @Value("${server.port}")
     private int port;
 
     @PostConstruct
