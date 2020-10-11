@@ -52,7 +52,7 @@ public class ResponseBuilder {
             return response;
         }
 
-        if (isGetMethod(request.getMethod())) {
+        if (isHttpGET(request.getMethod())) {
             setContent(request.getPath(), response);
         }
         return response;
@@ -78,11 +78,11 @@ public class ResponseBuilder {
             response.setStatus(Status.OK);
             response.setFilePath(contentPath.get());
 
-            String mimeType = fileHelper.mimeType(path);
-            if (mimeType.startsWith("text")) {
-                response.addHeader(CONTENT_TYPE, format("%s;charset=%s", mimeType, charset));
+            MimeType mimeType = fileHelper.mimeType(path);
+            if (needsCharset(mimeType)) {
+                response.addHeader(CONTENT_TYPE, format("%s;charset=%s", mimeType.getText(), charset));
             } else {
-                response.addHeader(CONTENT_TYPE, mimeType);
+                response.addHeader(CONTENT_TYPE, mimeType.getText());
             }
             response.addHeader(CONTENT_LENGTH, String.valueOf(Files.size(contentPath.get())));
         } else {
@@ -104,15 +104,21 @@ public class ResponseBuilder {
     }
 
     private boolean isMethodSupported(Method method) {
-        return isGetMethod(method) || isHeadMethod(method);
+        return isHttpGET(method) || isHeadMethod(method);
     }
 
-    private boolean isGetMethod(Method method) {
+    private boolean isHttpGET(Method method) {
         return GET.equals(method);
     }
 
     private boolean isHeadMethod(Method method) {
         return HEAD.equals(method);
+    }
+
+    private boolean needsCharset(MimeType mimeType) {
+        return MimeType.TEXT_HTML.equals(mimeType)
+                || MimeType.TEXT_CSS.equals(mimeType)
+                || MimeType.TEXT_JAVASCRIPT.equals(mimeType);
     }
 
 }

@@ -11,9 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static com.lemberski.webserver.http.Constants.HTML_FILE_ENDING;
-import static com.lemberski.webserver.http.Constants.HTM_FILE_ENDING;
-import static com.lemberski.webserver.http.response.MimeType.*;
 import static java.lang.String.format;
 
 @Service
@@ -41,29 +38,9 @@ public class FileHelper {
         return Files.exists(fullPath) ? Optional.of(fullPath) : Optional.empty();
     }
 
-    public String mimeType(String path) {
+    public MimeType mimeType(String path) {
         String fileEnding = path.substring(path.lastIndexOf('.') + 1);
-        switch (fileEnding) {
-            case HTML_FILE_ENDING:
-            case HTM_FILE_ENDING:
-                return TEXT_HTML.getText();
-            case "css":
-                return TEXT_CSS.getText();
-            case "js":
-                return TEXT_JAVASCRIPT.getText();
-            case "gif":
-                return IMAGE_GIF.getText();
-            case "jpg":
-            case "jpeg":
-                return IMAGE_JPG.getText();
-            case "png":
-                return IMAGE_PNG.getText();
-            case "svg":
-                return IMAGE_SVG_XML.getText();
-            default:
-                LOG.warn("Unknown mime type for fileExtension {}", fileEnding);
-                return APPLICATION_OCTET_STREAM.getText();
-        }
+        return MimeType.forFileEnding(fileEnding);
     }
 
     private void initRootDirPath(String rootDir) {

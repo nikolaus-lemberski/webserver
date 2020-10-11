@@ -24,6 +24,9 @@ public class ResponseBuilderTest extends ContextAwareBaseTest {
     @Value("${www.root.page}")
     private String rootPage;
 
+    @Value("${www.charset}")
+    private String charset;
+
     @Test
     public void testBuildResponse() throws IOException {
         Request request = new Request();
@@ -38,6 +41,7 @@ public class ResponseBuilderTest extends ContextAwareBaseTest {
         assertTrue(response.getFilePath().endsWith(rootPage));
         assertEquals(response.getHttpVersion(), HTTP_1_1);
         assertTrue(response.getHeaders().containsKey(CONNECTION) && response.getHeaders().containsValue(KEEP_ALIVE_VALUE));
+        assertTrue(response.getHeaders().containsKey(CONTENT_TYPE) && response.getHeaders().containsValue("text/html;charset=" + charset));
     }
 
     @Test
