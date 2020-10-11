@@ -30,7 +30,8 @@ If you want to serve files from a local directory on your machine, say on '~/tmp
 
 To run a simple load test, start the app (see 'Maven' and 'Docker' sections), then go to the loadtest directory and run
 
-`npm install`
+`npm install` (required only once)
+
 `npm start`
 
 Configuration options for load testing see loadtest/config.yml. NodeJS is required to run 'npm'.
