@@ -30,7 +30,7 @@ To build the project, run from the project root:
 
 `docker build -t lemberski/webserver .`
 
-Now you can your image:
+Now you can run your image:
 
 `docker run -p 8080:8080 lemberski/webserver`
 
