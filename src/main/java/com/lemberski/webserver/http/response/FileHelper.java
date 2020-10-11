@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static com.lemberski.webserver.http.Constants.HTML_FILE_ENDING;
 import static com.lemberski.webserver.http.Constants.HTM_FILE_ENDING;
+import static com.lemberski.webserver.http.response.MimeType.*;
 import static java.lang.String.format;
 
 @Service
@@ -45,23 +46,23 @@ public class FileHelper {
         switch (fileEnding) {
             case HTML_FILE_ENDING:
             case HTM_FILE_ENDING:
-                return "text/html";
+                return TEXT_HTML.getText();
             case "css":
-                return "text/css";
+                return TEXT_CSS.getText();
             case "js":
-                return "text/javascript";
+                return TEXT_JAVASCRIPT.getText();
             case "gif":
-                return "image/gif";
+                return IMAGE_GIF.getText();
             case "jpg":
             case "jpeg":
-                return "image/jpeg";
+                return IMAGE_JPG.getText();
             case "png":
-                return "image/png";
+                return IMAGE_PNG.getText();
             case "svg":
-                return "image/svg+xml";
+                return IMAGE_SVG_XML.getText();
             default:
                 LOG.warn("Unknown mime type for fileExtension {}", fileEnding);
-                return "application/octet-stream";
+                return APPLICATION_OCTET_STREAM.getText();
         }
     }
 

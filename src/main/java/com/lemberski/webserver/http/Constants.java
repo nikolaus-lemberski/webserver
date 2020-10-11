@@ -15,4 +15,5 @@ public interface Constants {
     String HTTP_1_1 = "HTTP/1.1";
     String HTML_FILE_ENDING = "html";
     String HTM_FILE_ENDING = "htm";
+
 }
