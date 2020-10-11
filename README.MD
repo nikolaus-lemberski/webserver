@@ -1,8 +1,12 @@
 # Simple HTTP Webserver
 
+The project runs a simple HTTP webserver to serve static files from a directory.
+
+## Limited functionality
+
 DEMO PROJECT - DO NOT USE IN PRODUCTION
 
-The project runs a simple HTTP webserver to serve static files from a directory.
+Only GET and HEAD methods are supported at the moment.
 
 ## Project structure
 
