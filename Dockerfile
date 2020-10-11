@@ -5,13 +5,14 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
-COPY www_root www_root
+COPY www_root target/www_root
 
 RUN ./mvnw install -DskipTests
 
 FROM adoptopenjdk/openjdk11:alpine-slim
 VOLUME /tmp
-COPY --from=build /workspace/app/target/lib /app/lib
-COPY --from=build /workspace/app/www_root /www_root
-COPY --from=build /workspace/app/target/classes /app
+ARG TARGETDIR=/workspace/app/target
+COPY --from=build ${TARGETDIR}/lib /app/lib
+COPY --from=build ${TARGETDIR}/www_root /www_root
+COPY --from=build ${TARGETDIR}/classes /app
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.lemberski.webserver.App"]
