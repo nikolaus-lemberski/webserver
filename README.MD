@@ -6,6 +6,10 @@ The project runs a simple HTTP webserver to serve static files from a directory.
 
 ## Project structure
 
+All HTTP handling is done with pure Java and no external libraries. Spring is used for providing configuration (via application.properties, can be overridden via environment variables) and Dependency Injection.
+
+The blocking approach was chosen to deal with requests. In order to handle many requests, each client connection is processed in a new thread. If the connection is configured to 'keep-alive' (default in HTTP/1.1 if not explicitly set to 'close' by the client), further requests are processed in the same thread until the connection timeouts.
+
 ![](drawing.jpeg)
 
 ## Configuration
