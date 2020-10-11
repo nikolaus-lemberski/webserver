@@ -1,0 +1,14 @@
+{
+  "name": "loadtest",
+  "version": "1.0.0",
+  "description": "Load testing with artillery",
+  "scripts": {
+    "start": "artillery run config.yml",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "artillery": "^1.6.1"
+  }
+}

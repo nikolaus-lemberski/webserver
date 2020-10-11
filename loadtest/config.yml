@@ -1,0 +1,13 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+  - duration: 10
+    arrivalRate: 1
+scenarios:
+- flow:
+  - get:
+      url: "/"
+  - get:
+      url: "/index.html"
+      headers:
+        Connection: "keep-alive"
