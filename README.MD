@@ -4,6 +4,10 @@ DEMO PROJECT - DO NOT USE IN PRODUCTION
 
 The project runs a simple HTTP webserver to serve static files from a directory.
 
+## Project structure
+
+![](drawing.jpeg)
+
 ## Configuration
 
 Environment variables can be passed with the -e flag, all project configuration in 'src/main/resources/application.properties' can be overridden.
@@ -34,4 +38,4 @@ To run a simple load test, start the app (see 'Maven' and 'Docker' sections), th
 
 `npm start`
 
-Configuration options for load testing see loadtest/config.yml. NodeJS is required to run 'npm'.
+Configuration options for load testing see 'loadtest/config.yml'. NodeJS is required to run 'npm'.
