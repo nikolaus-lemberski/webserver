@@ -1,5 +1,6 @@
 package com.lemberski.webserver.http.response;
 
+import com.lemberski.webserver.http.request.Method;
 import com.lemberski.webserver.http.request.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class ResponseBuilder {
     public Response from(Request request) throws IOException {
         Response response = new Response();
         if (!request.isValid()) {
-            LOG.error("Invalid request, sending internal server error. Request: {}", request);
+            LOG.error("Invalid request, sending internal server error, {}", request);
             setError(Status.INTERNAL_SERVER_ERROR, response);
             return response;
         }
@@ -42,13 +43,13 @@ public class ResponseBuilder {
         setHttpVersion(request.getHttpVersion(), response);
         setKeepAliveHeader(request.isKeepAlive(), response);
 
-        if (!(GET.equals(request.getMethod()) || HEAD.equals(request.getMethod()))) {
-            LOG.error("Method {} not supported, sending 405. Request: {}", request.getMethod(), request);
+        if (!isMethodSupported(request.getMethod())) {
+            LOG.error("Method {} not supported, sending 405, {}", request.getMethod(), request);
             setError(Status.METHOD_NOT_ALLOWED, response);
             return response;
         }
 
-        if (GET.equals(request.getMethod())) {
+        if (isGetMethod(request.getMethod())) {
             setContent(request.getPath(), response);
         }
         return response;
@@ -92,6 +93,18 @@ public class ResponseBuilder {
     private void setError(Status errorStatus, Response response) {
         response.setStatus(errorStatus);
         response.addHeader(CONTENT_LENGTH, String.valueOf(0));
+    }
+
+    private boolean isMethodSupported(Method method) {
+        return isGetMethod(method) || isHeadMethod(method);
+    }
+
+    private boolean isGetMethod(Method method) {
+        return GET.equals(method);
+    }
+
+    private boolean isHeadMethod(Method method) {
+        return HEAD.equals(method);
     }
 
 }
