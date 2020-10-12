@@ -81,6 +81,7 @@ public class ResponseBuilderTest extends ContextAwareBaseTest {
 
         Response response = responseBuilder.from(request);
 
+        assertEquals(response.getHttpVersion(), HTTP_1_1);
         assertEquals(response.getStatus(), Status.INTERNAL_SERVER_ERROR);
     }
 
