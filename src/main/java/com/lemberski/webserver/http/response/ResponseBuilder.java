@@ -52,6 +52,7 @@ public class ResponseBuilder {
             return response;
         }
 
+        response.setStatus(Status.OK);
         if (isHttpGET(request.getMethod())) {
             setContent(request.getPath(), response);
         }
