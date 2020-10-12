@@ -119,18 +119,6 @@ public class ResponseBuilder {
         response.addHeader(CONTENT_LENGTH, String.valueOf(0));
     }
 
-    private boolean isMethodSupported(Method method) {
-        return isGetMethod(method) || isHeadMethod(method);
-    }
-
-    private boolean isGetMethod(Method method) {
-        return GET.equals(method);
-    }
-
-    private boolean isHeadMethod(Method method) {
-        return HEAD.equals(method);
-    }
-
     private boolean needsCharset(MimeType mimeType) {
         return MimeType.TEXT_HTML.equals(mimeType)
                 || MimeType.TEXT_CSS.equals(mimeType)
