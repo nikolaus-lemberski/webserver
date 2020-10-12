@@ -37,13 +37,14 @@ public class ResponseBuilder {
 
     public Response from(Request request) throws IOException {
         Response response = new Response();
+        setHttpVersion(request.getHttpVersion(), response);
+
         if (!request.isValid()) {
             LOG.error("Invalid request, sending internal server error, {}", request);
             setError(Status.INTERNAL_SERVER_ERROR, response);
             return response;
         }
 
-        setHttpVersion(request.getHttpVersion(), response);
         setKeepAliveHeader(request.isKeepAlive(), response);
 
         switch (request.getMethod()) {
@@ -70,7 +71,11 @@ public class ResponseBuilder {
     }
 
     private void setHttpVersion(String httpVersion, Response response) {
-        response.setHttpVersion(httpVersion);
+        if (httpVersion == null || httpVersion.isBlank()) {
+            response.setHttpVersion(HTTP_1_1);
+        } else {
+            response.setHttpVersion(httpVersion);
+        }
     }
 
     private void setKeepAliveHeader(boolean keepAlive, Response response) {
