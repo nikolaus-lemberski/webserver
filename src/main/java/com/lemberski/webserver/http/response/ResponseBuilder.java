@@ -1,6 +1,5 @@
 package com.lemberski.webserver.http.response;
 
-import com.lemberski.webserver.http.request.Method;
 import com.lemberski.webserver.http.request.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +13,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static com.lemberski.webserver.http.Constants.*;
-import static com.lemberski.webserver.http.request.Method.GET;
-import static com.lemberski.webserver.http.request.Method.HEAD;
 import static java.lang.String.format;
 
 @Service
