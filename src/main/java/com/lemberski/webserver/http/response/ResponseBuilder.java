@@ -46,16 +46,26 @@ public class ResponseBuilder {
         setHttpVersion(request.getHttpVersion(), response);
         setKeepAliveHeader(request.isKeepAlive(), response);
 
-        if (!isMethodSupported(request.getMethod())) {
-            LOG.error("Method {} not supported, sending 405, {}", request.getMethod(), request);
-            setError(Status.METHOD_NOT_ALLOWED, response);
-            return response;
+        switch (request.getMethod()) {
+            case GET:
+                setContent(request.getPath(), response);
+                break;
+            case HEAD:
+                String path = request.getPath();
+                path = addRootPageIfNecessary(path);
+                if (fileHelper.toFullPath(path).isPresent()) {
+                    response.setStatus(Status.OK);
+                } else {
+                    response.setStatus(Status.NOT_FOUND);
+                }
+                response.addHeader(CONTENT_LENGTH, String.valueOf(0));
+                break;
+            default:
+                LOG.error("Method {} not supported, sending 405, {}", request.getMethod(), request);
+                setError(Status.METHOD_NOT_ALLOWED, response);
+                break;
         }
 
-        response.setStatus(Status.OK);
-        if (isHttpGET(request.getMethod())) {
-            setContent(request.getPath(), response);
-        }
         return response;
     }
 
@@ -105,10 +115,10 @@ public class ResponseBuilder {
     }
 
     private boolean isMethodSupported(Method method) {
-        return isHttpGET(method) || isHeadMethod(method);
+        return isGetMethod(method) || isHeadMethod(method);
     }
 
-    private boolean isHttpGET(Method method) {
+    private boolean isGetMethod(Method method) {
         return GET.equals(method);
     }
 
